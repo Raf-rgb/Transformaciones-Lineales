@@ -4,6 +4,7 @@ namespace Vector
 {
     class Vector
     {
+        // Coordenadas de un vector en R2
         public float x, y;
 
         // Metodo constructor que recibe 
