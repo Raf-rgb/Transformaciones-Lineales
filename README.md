@@ -105,3 +105,17 @@ Podemos eliminar el ultimo vertice del poligono con la funcion Remove()
   // [ 20, 20 ]
   // [ 60, 80 ]
 ```
+Para dibujar el poligono creado, se necesita de un PictureBox y se pasa como parametro a la función Draw()
+
+```c#
+  // Creamos el poligono
+  Polygon p = new Polygon();
+  
+  // Añadimos sus vertices
+  p.Add(20, 20);
+  p.Add(60, 80);
+  p.Add(100, 20);
+  
+  // Dibujamos el poligono en el picture box de nuestro WindowsForm
+  p.Draw(picturebox);
+```
