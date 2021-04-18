@@ -11,7 +11,10 @@ La clase vector permite crear vectores en 2D. Ejemplo: creando un vector en (2, 
 Con la función Print() podemos visualizar los valores (x, y) del vector en consola
 
 ```c#
+  // Creamos el vector en (2, 5)
   Vector v = new Vector(2, 5);
+  
+  // Mostramos en consola los valores (x, y)
   v.Print();
   
   // Resultado en consola
@@ -21,6 +24,7 @@ Con la función Print() podemos visualizar los valores (x, y) del vector en cons
 Con la función GetValues() podemos obtener los valores (x, y) como un arreglo de tipo Float
 
 ```c#
+  // Creamos el vector en (2, 5)
   Vector v = new Vector(2, 5);
   
   // Obteniendo los valores (x, y) como un arreglo
