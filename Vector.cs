@@ -1,6 +1,8 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Vector
+namespace Draw
 {
     class Vector
     {
@@ -9,7 +11,7 @@ namespace Vector
 
         // Metodo constructor que recibe 
         // las coordenadas del vector
-        public Vector(float x_, float y_) 
+        public Vector(float x_, float y_)
         {
             x = x_;
             y = y_;
@@ -17,19 +19,20 @@ namespace Vector
 
         // Metodo que devuelve las coordenadas
         // del vector en un arreglo
-        public float[] GetValues() { return new float[]{x, y}; }
-        
+        public float[] GetValues() { return new float[] { x, y }; }
+
         // Metodo que asigna las coordenadas
         // al vector con un arreglo.
-        public void SetValues(float[] values) 
-        { 
+        public void SetValues(float[] values)
+        {
             x = values[0];
             y = values[1];
         }
 
         // Metodo que imprime en consola las
         // coordenadas del vector
-        public void Print() {
+        public void Print()
+        {
             Console.WriteLine($"[{x}, {y}]");
         }
     }
