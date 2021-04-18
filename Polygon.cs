@@ -12,10 +12,15 @@ namespace Draw
         // poligono
         List<Vector> vertex;
 
+        // Posicion del poligono
+        Vector pos;
+
         // Metodo constructor que inicializa
-        // los vertices del poligono
-        public Polygon()
+        // los vertices del poligono y la
+        // posicion del poligono
+        public Polygon(float x, float y)
         {
+            pos = new Vector(x, y);
             vertex = new List<Vector>();
         }
 
@@ -33,6 +38,64 @@ namespace Draw
         {
             foreach (Vector v in vertex) Console.WriteLine($"[ {v.x}, {v.y} ]");
         }
+
+       // Metodo para rotar el poligono
+       public void Rotate(double angle)
+       {
+            // Conversion de grados a radianes
+            angle = angle * Math.PI / 180;
+
+            // Se define la matriz de rotación
+            double[,] R = new double[,] {
+                {  Math.Cos(angle), Math.Sin(angle), 0 },
+                { -Math.Sin(angle), Math.Cos(angle), 0 },
+                {  0              , 0              , 1 }
+            };
+
+            // Se aplica la transformación lineal 
+            // para cada vertice del poligono
+            foreach(Vector v in vertex)
+            {
+                // Se define el vector
+                double[] p = new double[] { v.x, v.y, 1};
+
+                // Se obtiene el resultado de la
+                // multiplicacion
+                double[] result = Mult(R, p);
+                
+                // Se actualizan los valores (x, y)
+                // del vertice
+                v.x = (float) result[0];
+                v.y = (float) result[1];
+            }
+
+            // La transformacion lineal tambien 
+            // se aplica al centro del poligono
+            double[] posR = new double[] { pos.x, pos.y, 1 };
+
+            pos.x = (float) Mult(R, posR)[0];
+            pos.y = (float) Mult(R, posR)[0];
+        }
+
+        // Metodo para multiplicar una matrix con un vector
+        private double[] Mult(double[,] T, double[] p)
+        {
+            double[] result = new double[3];
+
+            for(int i = 0; i < 3; i++)
+            {
+                double sum = 0;
+
+                for(int j = 0; j < 3; j++)
+                {
+                    sum += T[i, j] * p[j];
+                }
+                result[i] = sum;
+            }
+
+            return result;
+        }
+
 
         // Metodo que dibuja en un PictureBox que
         // recibe como parametro.
