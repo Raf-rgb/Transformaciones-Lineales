@@ -104,5 +104,4 @@ Podemos eliminar el ultimo vertice del poligono con la funcion Remove()
   // Resultado en consola
   // [ 20, 20 ]
   // [ 60, 80 ]
-  // [ 100, 20 ]
 ```
