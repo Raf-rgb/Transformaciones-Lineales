@@ -36,7 +36,7 @@ un arreglo
 
 ```c#
   // Valores (x, y) a asignar
-  float[] valores = new Float[]{ 1, 2 };
+  float[] valores = new float[]{ 1, 2 };
   
   // Creando el vector en (2, 5)
   Vector v = new Vector(2, 5);
