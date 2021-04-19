@@ -139,7 +139,7 @@ namespace Draw
 
         // Metodo que dibuja en un PictureBox que
         // recibe como parametro.
-        public void Draw(PictureBox canvas)
+        public void Draw()
         {
             if (vertex.Count > 0)
             {
