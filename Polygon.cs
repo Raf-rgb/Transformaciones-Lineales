@@ -76,6 +76,42 @@ namespace Draw
             pos.x = (float) Mult(R, posR)[0];
             pos.y = (float) Mult(R, posR)[0];
         }
+        
+        // Metodo para escalar el poligono
+       public void Escalar(double sx, double sy)
+       {
+
+            // Se define la matriz de escalamiento
+            double[,] E = new double[,] {
+                {  sx,  0, 0 },
+                {   0, sy, 0 },
+                {   0,  0, 1 }
+            };
+
+            // Se aplica la transformación lineal 
+            // para cada vertice del poligono
+            foreach(Vector v in vertex)
+            {
+                // Se define el vector
+                double[] p = new double[] { v.x, v.y, 1};
+
+                // Se obtiene el resultado de la
+                // multiplicacion
+                double[] result = Mult(E, p);
+                
+                // Se actualizan los valores (x, y)
+                // del vertice
+                v.x = (float) result[0];
+                v.y = (float) result[1];
+            }
+
+            // La transformacion lineal tambien 
+            // se aplica al centro del poligono
+            double[] posE = new double[] { pos.x, pos.y, 1 };
+
+            pos.x = (float) Mult(E, posE)[0];
+            pos.y = (float) Mult(E, posE)[0];
+        }
 
         // Metodo para multiplicar una matrix con un vector
         private double[] Mult(double[,] T, double[] p)
