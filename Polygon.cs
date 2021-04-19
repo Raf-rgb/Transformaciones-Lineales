@@ -166,5 +166,11 @@ namespace Draw
                 canvas.Image = bitmap;
             }
         }
+        
+        //Metodo para eliminar los vertices
+        public void Clear()
+        {
+            vertex.Clear();
+        }
     }
 }
