@@ -15,13 +15,17 @@ namespace Draw
         // Posicion del poligono
         Vector pos;
 
+        // Canvas
+        PictureBox canvas;
+
         // Metodo constructor que inicializa
         // los vertices del poligono y la
         // posicion del poligono
-        public Polygon(float x, float y)
+        public Polygon(PictureBox canvas_, float x, float y)
         {
             pos = new Vector(x, y);
             vertex = new List<Vector>();
+            canvas = canvas_;
         }
 
         // Agrega un nuevo Vector a la lista 
@@ -65,21 +69,21 @@ namespace Draw
                 
                 // Se actualizan los valores (x, y)
                 // del vertice
-                v.x = (float) result[0];
-                v.y = (float) result[1];
+                v.x = (float) result[0] - canvas.Width / 2;
+                v.y = (float) result[1] - canvas.Height / 2;
             }
 
             // La transformacion lineal tambien 
             // se aplica al centro del poligono
             double[] posR = new double[] { pos.x, pos.y, 1 };
 
-            pos.x = (float) Mult(R, posR)[0];
-            pos.y = (float) Mult(R, posR)[0];
+            pos.x = (float) Mult(R, posR)[0] - canvas.Width / 2;
+            pos.y = (float) Mult(R, posR)[0] - canvas.Height / 2;
         }
-        
+
         // Metodo para escalar el poligono
-       public void Escalar(double sx, double sy)
-       {
+        public void Escalar(double sx, double sy)
+        {
 
             // Se define la matriz de escalamiento
             double[,] E = new double[,] {
@@ -90,27 +94,27 @@ namespace Draw
 
             // Se aplica la transformación lineal 
             // para cada vertice del poligono
-            foreach(Vector v in vertex)
+            foreach (Vector v in vertex)
             {
                 // Se define el vector
-                double[] p = new double[] { v.x, v.y, 1};
+                double[] p = new double[] { v.x, v.y, 1 };
 
                 // Se obtiene el resultado de la
                 // multiplicacion
                 double[] result = Mult(E, p);
-                
+
                 // Se actualizan los valores (x, y)
                 // del vertice
-                v.x = (float) result[0];
-                v.y = (float) result[1];
+                v.x = (float)result[0] - canvas.Width / 2;
+                v.y = (float)result[1] - canvas.Height / 2;
             }
 
             // La transformacion lineal tambien 
             // se aplica al centro del poligono
             double[] posE = new double[] { pos.x, pos.y, 1 };
 
-            pos.x = (float) Mult(E, posE)[0];
-            pos.y = (float) Mult(E, posE)[0];
+            pos.x = (float)Mult(E, posE)[0] - canvas.Width / 2;
+            pos.y = (float)Mult(E, posE)[0] - canvas.Height / 2;
         }
 
         // Metodo para multiplicar una matrix con un vector
