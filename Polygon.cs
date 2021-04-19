@@ -56,33 +56,37 @@ namespace Draw
                 {  0              , 0              , 1 }
             };
 
+            Trasladar(-canvas.Width/2, -canvas.Height/2);
+
             // Se aplica la transformación lineal 
             // para cada vertice del poligono
-            foreach(Vector v in vertex)
+            foreach (Vector v in vertex)
             {
                 // Se define el vector
                 double[] p = new double[] { v.x, v.y, 1};
 
                 // Se obtiene el resultado de la
                 // multiplicacion
-                double[] result = Mult(R, p);
+                double[] result = Mult(p, R);
                 
                 // Se actualizan los valores (x, y)
                 // del vertice
-                v.x = (float) result[0] - canvas.Width / 2;
-                v.y = (float) result[1] - canvas.Height / 2;
+                v.x = (float) result[0];
+                v.y = (float) result[1];
             }
 
             // La transformacion lineal tambien 
             // se aplica al centro del poligono
             double[] posR = new double[] { pos.x, pos.y, 1 };
 
-            pos.x = (float) Mult(R, posR)[0] - canvas.Width / 2;
-            pos.y = (float) Mult(R, posR)[0] - canvas.Height / 2;
+            pos.x = (float) Mult(posR, R)[0];
+            pos.y = (float) Mult(posR, R)[0];
+
+            Trasladar(canvas.Width / 2, canvas.Height / 2);
         }
-        
+
         // Metodo para escalar el poligono
-        public void Escalar(double sx, double sy)
+        public void Scale(double sx, double sy)
         {
 
             // Se define la matriz de escalamiento
@@ -91,6 +95,7 @@ namespace Draw
                 {   0, sy, 0 },
                 {   0,  0, 1 }
             };
+
 
             // Se aplica la transformación lineal 
             // para cada vertice del poligono
@@ -101,7 +106,7 @@ namespace Draw
 
                 // Se obtiene el resultado de la
                 // multiplicacion
-                double[] result = Mult(E, p);
+                double[] result = Mult(p, E);
 
                 // Se actualizan los valores (x, y)
                 // del vertice
@@ -113,45 +118,51 @@ namespace Draw
             // se aplica al centro del poligono
             double[] posE = new double[] { pos.x, pos.y, 1 };
 
-            pos.x = (float)Mult(E, posE)[0] - canvas.Width / 2;
-            pos.y = (float)Mult(E, posE)[0] - canvas.Height / 2;
+            pos.x = (float)Mult(posE, E)[0] - canvas.Width / 2;
+            pos.y = (float)Mult(posE, E)[0] - canvas.Height / 2;
         }
-        
+
         //Metodo para trasladar un poligono
-        public void Trasladar(double tx, double ty){
+        public void Translate(double tx, double ty)
+        {
             // Se define la matriz de traslación
             double[,] T = new double[,]{
                 {  1,  0, 0 },
                 {  0,  1, 0 },
                 { tx, ty, 1 }
             };
-            
+
+            //MessageBox.Show($"[{tx}, {ty}]");
+
             // Se aplica la transformación lineal 
             // para cada vertice del poligono
-            foreach(Vector v in vertex)
+            foreach (Vector v in vertex)
             {
                 // Se define el vector
-                double[] p = new double[] { v.x, v.y, 1};
+                double[] p = new double[] { v.x, v.y, 1 };
+
 
                 // Se obtiene el resultado de la
                 // multiplicacion
-                double[] result = Mult(T, p);
-                
+                double[] result = Mult(p, T);
+
                 // Se actualizan los valores (x, y)
                 // del vertice
-                v.x = (float) result[0] - canvas.Width / 2;
-                v.y = (float) result[1] - canvas.Height / 2;
+                v.x = (float)result[0];
+                v.y = (float)result[1];
+
+
             }
             // La transformacion lineal tambien 
             // se aplica al centro del poligono
-            double[] posE = new double[] { pos.x, pos.y, 1 };
+            double[] posC = new double[] { pos.x, pos.y, 1 };
 
-            pos.x = (float)Mult(E, posE)[0] - canvas.Width / 2;
-            pos.y = (float)Mult(E, posE)[0] - canvas.Height / 2;
+            pos.x = (float) Mult(posC, T)[0];
+            pos.y = (float) Mult(posC, T)[1];
         }
 
         // Metodo para multiplicar una matrix con un vector
-        private double[] Mult(double[,] T, double[] p)
+        private double[] Mult(double[] p, double[,] t)
         {
             double[] result = new double[3];
 
@@ -161,14 +172,13 @@ namespace Draw
 
                 for(int j = 0; j < 3; j++)
                 {
-                    sum += T[i, j] * p[j];
+                    sum += p[j] * t[j, i];
                 }
                 result[i] = sum;
             }
 
             return result;
         }
-
 
         // Metodo que dibuja en un PictureBox que
         // recibe como parametro.
@@ -199,11 +209,8 @@ namespace Draw
                 canvas.Image = bitmap;
             }
         }
-        
+
         //Metodo para eliminar los vertices
-        public void Clear()
-        {
-            vertex.Clear();
-        }
+        public void Clear() { vertex.Clear(); }
     }
 }
