@@ -80,7 +80,7 @@ namespace Draw
             pos.x = (float) Mult(R, posR)[0] - canvas.Width / 2;
             pos.y = (float) Mult(R, posR)[0] - canvas.Height / 2;
         }
-
+        
         // Metodo para escalar el poligono
         public void Escalar(double sx, double sy)
         {
@@ -109,6 +109,39 @@ namespace Draw
                 v.y = (float)result[1] - canvas.Height / 2;
             }
 
+            // La transformacion lineal tambien 
+            // se aplica al centro del poligono
+            double[] posE = new double[] { pos.x, pos.y, 1 };
+
+            pos.x = (float)Mult(E, posE)[0] - canvas.Width / 2;
+            pos.y = (float)Mult(E, posE)[0] - canvas.Height / 2;
+        }
+        
+        //Metodo para trasladar un poligono
+        public void Trasladar(double tx, double ty){
+            // Se define la matriz de traslación
+            double[,] T = new double[,]{
+                {  1,  0, 0 },
+                {  0,  1, 0 },
+                { tx, ty, 1 }
+            };
+            
+            // Se aplica la transformación lineal 
+            // para cada vertice del poligono
+            foreach(Vector v in vertex)
+            {
+                // Se define el vector
+                double[] p = new double[] { v.x, v.y, 1};
+
+                // Se obtiene el resultado de la
+                // multiplicacion
+                double[] result = Mult(T, p);
+                
+                // Se actualizan los valores (x, y)
+                // del vertice
+                v.x = (float) result[0] - canvas.Width / 2;
+                v.y = (float) result[1] - canvas.Height / 2;
+            }
             // La transformacion lineal tambien 
             // se aplica al centro del poligono
             double[] posE = new double[] { pos.x, pos.y, 1 };
