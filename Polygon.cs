@@ -56,7 +56,7 @@ namespace Draw
                 {  0              , 0              , 1 }
             };
 
-            Trasladar(-canvas.Width/2, -canvas.Height/2);
+            Translate(-canvas.Width/2, -canvas.Height/2);
 
             // Se aplica la transformación lineal 
             // para cada vertice del poligono
@@ -82,7 +82,7 @@ namespace Draw
             pos.x = (float) Mult(posR, R)[0];
             pos.y = (float) Mult(posR, R)[0];
 
-            Trasladar(canvas.Width / 2, canvas.Height / 2);
+            Translate(canvas.Width / 2, canvas.Height / 2);
         }
 
         // Metodo para escalar el poligono
